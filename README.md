@@ -90,14 +90,29 @@ Projeto acadêmico de sistema especialista baseado em regras, com encadeamento p
 
 ## Experiência
 
-**WebStore** · Desenvolvedor de Software · *ago/2025 – out/2026*  
-Evolução de painel administrativo e storefront de e-commerce, autenticação e MFA, integrações via BFF, funcionalidades de PDV, ajustes de interface e investigação de builds no AWS Amplify.
+### E-commerce e Sistemas Administrativos
 
-**SpaceOdyssey Code & Design** · Desenvolvimento Full Stack · *set/2024 – jul/2025*  
-Projeto TerraBrasilis: interfaces em Next.js, backend com NestJS/MongoDB, integração Twilio/WhatsApp e fluxos de eventos com QR Code.
+**WebStore**
 
-**HealthDEV** · Desenvolvimento Front-end · *set/2023 – abr/2024*  
-Desenvolvimento de interfaces em React, TypeScript e Tailwind CSS, em fluxo colaborativo com Git/GitHub.
+Desenvolvimento de painéis administrativos e storefronts, com autenticação e MFA, integrações via BFF, funcionalidades de PDV e experiência com AWS Amplify.
+
+`Painel administrativo` · `Storefront` · `MFA` · `BFF` · `PDV` · `AWS Amplify`
+
+### Desenvolvimento Full Stack
+
+**SpaceOdyssey Code & Design**
+
+Desenvolvimento de aplicações com Next.js, NestJS e MongoDB, integrações com Twilio/WhatsApp e funcionalidades de gestão de eventos.
+
+`Next.js` · `NestJS` · `MongoDB` · `Twilio/WhatsApp`
+
+### Desenvolvimento Front-end
+
+**HealthDEV**
+
+Construção e manutenção de interfaces com React, TypeScript e Tailwind CSS, utilizando Git/GitHub em fluxos colaborativos.
+
+`React` · `TypeScript` · `Tailwind CSS` · `Git/GitHub`
 
 ---
 
