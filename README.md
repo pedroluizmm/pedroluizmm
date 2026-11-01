@@ -58,36 +58,6 @@ Busco oportunidades como **Desenvolvedor Front-end Júnior, Desenvolvedor de Sof
 
 ---
 
-## Projetos públicos
-
-Projetos de estudo e desenvolvimento disponíveis para consulta, com diferentes tecnologias e contextos.
-
-<details open>
-<summary><b>Destino Perfeito — aplicativo de turismo</b> · Kotlin · Firebase</summary>
-<br />
-Aplicativo Android para explorar destinos turísticos, com autenticação via Firebase, favoritos persistidos em Firestore e integração com aplicativos de mapas. Projeto acadêmico em equipe.
-
-**[Ver repositório](https://github.com/pedroluizmm/Destino-Perfeito)**
-</details>
-
-<details>
-<summary><b>UniReservas — API de reservas</b> · Node.js · Express · MySQL</summary>
-<br />
-API de gerenciamento de restaurantes, clientes, mesas e reservas, incluindo fluxos de disponibilidade e simulação de pagamento. Projeto demonstrativo, sem integração de cobrança real.
-
-**[Ver repositório](https://github.com/pedroluizmm/unireservas)**
-</details>
-
-<details>
-<summary><b>Sistema especialista de arboviroses</b> · CLIPS · Regras de produção</summary>
-<br />
-Projeto acadêmico de sistema especialista baseado em regras, com encadeamento para frente e rastreamento das regras acionadas. Demonstração educacional; não realiza diagnóstico médico.
-
-**[Ver repositório](https://github.com/pedroluizmm/medMachine_clip)**
-</details>
-
----
-
 ## Experiência
 
 ### E-commerce e Sistemas Administrativos
