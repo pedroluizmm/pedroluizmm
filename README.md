@@ -86,15 +86,6 @@ Construção e manutenção de interfaces com React, TypeScript e Tailwind CSS, 
 
 ---
 
-## Atividade no GitHub
-
-Você pode consultar minha atividade e os projetos publicados diretamente no GitHub:
-
-- [Contribuições e atividade](https://github.com/pedroluizmm?tab=overview)
-- [Repositórios públicos](https://github.com/pedroluizmm?tab=repositories)
-
----
-
 ## Em foco
 
 ```yaml
