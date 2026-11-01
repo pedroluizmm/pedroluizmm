@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="285" viewBox="0 0 1200 285" role="img" aria-labelledby="title desc">
+  <title id="title">Pedro Luiz Mariano — Software Developer</title>
+  <desc id="desc">Banner em gradiente roxo e indigo para o perfil GitHub de Pedro Luiz Mariano.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E1021"/>
+      <stop offset="55%" stop-color="#261D4D"/>
+      <stop offset="100%" stop-color="#5B2994"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#B39AFF"/>
+      <stop offset="100%" stop-color="#E0D7FF"/>
+    </linearGradient>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#A78BFA" opacity="0.19"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="285" rx="20" fill="url(#bg)"/>
+  <rect width="1200" height="285" rx="20" fill="url(#dots)"/>
+  <circle cx="1085" cy="50" r="175" fill="#8B5CF6" opacity="0.16"/>
+  <circle cx="1085" cy="50" r="112" fill="#A78BFA" opacity="0.12"/>
+  <path d="M780 281 C880 170 1040 213 1200 126 L1200 285Z" fill="#9B73F6" opacity="0.10"/>
+  <path d="M0 248 C280 210 390 304 630 270 C860 235 975 270 1200 225 L1200 285 L0 285Z" fill="#966DEB" opacity="0.13"/>
+  <rect x="70" y="51" width="180" height="30" rx="15" fill="#392D69" stroke="#7052C2"/>
+  <text x="160" y="71" text-anchor="middle" fill="#E3D9FF" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">SOFTWARE DEVELOPER</text>
+  <text x="70" y="144" fill="#F7F4FF" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700">Pedro Luiz Mariano</text>
+  <rect x="70" y="164" width="78" height="4" rx="2" fill="url(#glow)"/>
+  <text x="70" y="203" fill="#DAD2F8" font-family="Arial, Helvetica, sans-serif" font-size="22">Front-end  •  Full Stack  •  React  •  Next.js  •  TypeScript</text>
+  <text x="70" y="244" fill="#B7ACDC" font-family="Arial, Helvetica, sans-serif" font-size="16">Fortaleza, Brasil    |    Open to Junior Developer Opportunities</text>
+</svg>

@@ -1,6 +1,5 @@
-<!-- Perfil profissional de Pedro Luiz Moreira Mariano. -->
 <div align="center">
-  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:111026,50:423075,100:7C3AED&height=185&section=header&text=Pedro%20Luiz%20Mariano&fontSize=37&fontColor=FFFFFF&fontAlignY=36&animation=fadeIn&desc=Software%20Developer%20%7C%20Front-end%20%26%20Full%20Stack&descAlignY=62&descSize=17" alt="Pedro Luiz Mariano — Software Developer" />
+  <img src="./assets/banner.svg" alt="Pedro Luiz Mariano — Software Developer" width="100%" />
 
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=3200&pause=950&color=A78BFA&center=true&vCenter=true&width=700&height=44&lines=React+%7C+Next.js+%7C+TypeScript;Web+Applications+%7C+API+Integrations;Building+reliable+digital+experiences" alt="React, Next.js, TypeScript e desenvolvimento de aplicações web" />
 
@@ -104,12 +103,10 @@ Desenvolvimento de interfaces em React, TypeScript e Tailwind CSS, em fluxo cola
 
 ## Atividade no GitHub
 
-<div align="center">
-  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=pedroluizmm&show_icons=true&hide_border=true&bg_color=101021&title_color=A78BFA&text_color=DDD6FE&icon_color=8B5CF6" alt="Estatísticas públicas do GitHub" />
-  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=pedroluizmm&layout=compact&hide_border=true&bg_color=101021&title_color=A78BFA&text_color=DDD6FE&langs_count=6" alt="Linguagens dos repositórios públicos" />
-</div>
+Você pode consultar minha atividade e os projetos publicados diretamente no GitHub:
 
-> Estatísticas automáticas refletem os repositórios públicos e não representam, isoladamente, nível de proficiência.
+- [Contribuições e atividade](https://github.com/pedroluizmm?tab=overview)
+- [Repositórios públicos](https://github.com/pedroluizmm?tab=repositories)
 
 ---
 
@@ -123,5 +120,4 @@ open_to: [front-end junior, software developer junior, full stack junior]
 
 <div align="center">
   <a href="mailto:pedrolmm123321@gmail.com"><b>Vamos conversar sobre desenvolvimento de software.</b></a>
-  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:111026,50:423075,100:7C3AED&height=92&section=footer" alt="Rodapé roxo em gradiente" />
 </div>
