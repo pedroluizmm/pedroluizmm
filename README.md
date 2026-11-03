@@ -2,7 +2,7 @@
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/hero-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/hero-light.svg" width="99%" alt="Pedro Luiz Mariano — Desenvolvedor Full Stack Júnior. React, Next.js, TypeScript, Node.js e NestJS. Fortaleza, Brasil. Graduando em Ciência da Computação na Unifor. Disponível para oportunidades júnior." /></picture>
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/sobre-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/sobre-light.svg" width="60%" alt="Sobre mim. Desenvolvedor Full Stack Júnior com experiência em React, Next.js e TypeScript no front-end e Node.js e NestJS no back-end, em projetos de e-commerce, PDV e integrações por BFF. Graduando em Ciência da Computação na Unifor, com conclusão prevista para 2027.1." /></picture><picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/foco-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/foco-light.svg" width="39%" alt="Em foco: estudando arquitetura de software, testes automatizados e fundamentos de cloud. Construindo aplicações web full stack e integrações de APIs. Aberto a oportunidades como Desenvolvedor Full Stack Júnior, Desenvolvedor de Software Júnior e Desenvolvedor Front-end Júnior." /></picture>
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/stack-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/stack-light.svg" width="99%" alt="Stack e ferramentas: TypeScript, JavaScript, Python, Java, React, Next.js, Tailwind CSS, Sass/SCSS, Node.js, NestJS, MongoDB, MySQL, Firebase, AWS Amplify, Git, Figma, Postman e Storybook." /></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/stack-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/stack-light.svg" width="99%" alt="Stack e ferramentas: TypeScript, JavaScript, Python, Java, React, Next.js, Tailwind CSS, Sass/SCSS, Node.js, NestJS, MongoDB, MySQL, Firebase, AWS Amplify, Docker, Git, Figma, Postman e Storybook." /></picture>
 
 </div>
 
@@ -59,7 +59,7 @@ Na **HealthDEV**, atuei no front-end do **SaúdeHD**, uma aplicação web, com f
 
 **Front-end:** React, Next.js, TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Sass/SCSS e styled-components.  
 **Back-end e integrações:** Node.js, NestJS, APIs REST, BFF, MongoDB e MySQL.  
-**Ferramentas e ambiente:** Git/GitHub, Postman, Figma, Storybook e AWS Amplify.  
+**Ferramentas e ambiente:** Git/GitHub, Docker, Postman, Figma, Storybook e AWS Amplify.  
 **Outros conhecimentos:** Python, Java, Firebase, Jira, Kanban e Scrum.
 
 ## Formação
