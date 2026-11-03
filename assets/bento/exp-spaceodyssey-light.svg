@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="990" height="192" viewBox="0 0 990 192" role="img" aria-label="SpaceOdyssey — TerraBrasilis: plataforma de gestão de eventos desenvolvida com Next.js, TypeScript, NestJS e MongoDB; integrações Twilio/WhatsApp e check-in por QR Code.">
+<style>
+.card{fill:#F8F6FF;stroke:#E2DCFA;stroke-width:1.2}
+text{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif}
+.mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}
+.txt{fill:#1D1933} .sec{fill:#57526F} .acc{fill:#6B46D9}
+.b{font-weight:600;fill:#1D1933}
+.chip{fill:#EDE7FE} .chipt{fill:#4C2A82}
+</style>
+<rect x="6" y="6" width="978" height="180" rx="22" class="card"/>
+<text x="36" y="58" class="acc mono" font-size="15">TerraBrasilis</text>
+<text x="36" y="98" class="txt" font-size="27" font-weight="700" letter-spacing="-0.4">SpaceOdyssey Code &amp; Design</text>
+<text x="36" y="136" class="sec" font-size="18">Plataforma de gestão de eventos desenvolvida com Next.js, TypeScript, NestJS e MongoDB; integrações</text>
+<text x="36" y="164" class="sec" font-size="18">Twilio/WhatsApp e check-in por QR Code.</text>
+</svg>

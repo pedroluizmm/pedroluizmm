@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="990" height="192" viewBox="0 0 990 192" role="img" aria-label="HealthDEV — SaúdeHD: desenvolvimento e manutenção de interfaces de uma aplicação web com React, TypeScript e Tailwind CSS; trabalho em sprints Scrum, pull requests e revisão de código no GitHub.">
+<style>
+.card{fill:#14111F;stroke:#2B2448;stroke-width:1.2}
+text{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif}
+.mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}
+.txt{fill:#EEEBFA} .sec{fill:#A6A0C4} .acc{fill:#A78BFA}
+.b{font-weight:600;fill:#EEEBFA}
+.chip{fill:#221B3D} .chipt{fill:#CDBFFD}
+</style>
+<rect x="6" y="6" width="978" height="180" rx="22" class="card"/>
+<text x="36" y="58" class="acc mono" font-size="15">SaúdeHD</text>
+<text x="36" y="98" class="txt" font-size="27" font-weight="700" letter-spacing="-0.4">HealthDEV</text>
+<text x="36" y="136" class="sec" font-size="18">Desenvolvimento e manutenção de interfaces de uma aplicação web com React, TypeScript e Tailwind CSS; trabalho</text>
+<text x="36" y="164" class="sec" font-size="18">em sprints Scrum, pull requests e revisão de código no GitHub.</text>
+</svg>

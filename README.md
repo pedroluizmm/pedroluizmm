@@ -1,99 +1,78 @@
 <div align="center">
-  <img src="./assets/banner.svg" alt="Pedro Luiz Mariano — Software Developer" width="100%" />
 
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=3200&pause=950&color=A78BFA&center=true&vCenter=true&width=700&height=44&lines=React+%7C+Next.js+%7C+TypeScript;Web+Applications+%7C+API+Integrations;Building+reliable+digital+experiences" alt="React, Next.js, TypeScript e desenvolvimento de aplicações web" />
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/hero-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/hero-light.svg" width="99%" alt="Pedro Luiz Mariano — Desenvolvedor de Software. React, Next.js e TypeScript. Fortaleza, Brasil. Graduando em Ciência da Computação na Unifor. Disponível para oportunidades júnior." /></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/sobre-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/sobre-light.svg" width="60%" alt="Sobre mim. Desenvolvedor de software com atuação em aplicações web desde 2023, experiência em React, Next.js, TypeScript, aplicações de e-commerce, PDV e integrações por BFF. Graduando em Ciência da Computação na Unifor, com conclusão prevista para 2027.1." /></picture><picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/foco-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/foco-light.svg" width="39%" alt="Em foco: arquitetura de software, testes automatizados e fundamentos de cloud. Desenvolvimento de aplicações web e integrações. Interesse em oportunidades como Desenvolvedor Front-end Júnior, Desenvolvedor de Software Júnior e Full Stack Júnior." /></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/stack-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/stack-light.svg" width="99%" alt="Stack e ferramentas: TypeScript, JavaScript, Python, Java, React, Next.js, Tailwind CSS, Sass/SCSS, Node.js, NestJS, MongoDB, MySQL, Firebase, AWS Amplify, Git, Figma, Postman e Storybook." /></picture>
 
-  <p>
-    <a href="https://www.linkedin.com/in/pedro-luiz-moreira-mariano-001120175/"><img src="https://img.shields.io/badge/LinkedIn-6D4BC3?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-    <a href="mailto:pedrolmm123321@gmail.com"><img src="https://img.shields.io/badge/Email-4B3585?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
-    <a href="https://github.com/pedroluizmm"><img src="https://img.shields.io/badge/GitHub-211A36?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
-  </p>
-
-  <img src="https://img.shields.io/badge/Fortaleza%2C%20Brazil-1F1B35?style=flat-square&logo=googlemaps&logoColor=A78BFA" alt="Fortaleza, Brasil" />
-  <img src="https://img.shields.io/badge/Computer%20Science-UNIFOR-1F1B35?style=flat-square&logo=academia&logoColor=A78BFA" alt="Ciência da Computação — Unifor" />
-  <img src="https://img.shields.io/badge/Open%20to-Junior%20Developer%20Roles-4C2A82?style=flat-square" alt="Disponível para vagas júnior" />
 </div>
 
----
+## Experiência profissional e projetos
 
-## Sobre mim
+Atuo no desenvolvimento de aplicações web desde 2023, com experiência em **interfaces, integrações de APIs, sistemas administrativos e fluxos de negócio**. Abaixo estão as principais contribuições em cada experiência, com foco nas tecnologias utilizadas e nos problemas de produto trabalhados.
 
-Sou desenvolvedor de software, com atuação em aplicações web desde 2023, e graduando em **Ciência da Computação na Universidade de Fortaleza (Unifor)**, com conclusão prevista para **2027.1**.
+### WebStore — E-commerce, painel administrativo e PDV
 
-Minha experiência inclui evolução de **painéis administrativos, e-commerce e ponto de venda (PDV)**, desenvolvimento com **React, Next.js e TypeScript**, integração de APIs e atividades de build e troubleshooting com **AWS Amplify**. Também trabalhei em projetos full stack com **NestJS e MongoDB**.
+**Desenvolvedor de Software | Estágio → Desenvolvedor Júnior (PJ) | 2025–2026**
 
-Busco oportunidades como **Desenvolvedor Front-end Júnior, Desenvolvedor de Software Júnior ou Full Stack Júnior**.
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/exp-webstore-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/exp-webstore-light.svg" width="99%" alt="WebStore: evolução de painel administrativo e storefront de e-commerce, fluxos de PDV, autenticação multifator, APIs por BFF e troubleshooting de builds no AWS Amplify." /></picture>
 
-## Tecnologias e ferramentas
+- **Painel administrativo:** desenvolvi e mantive funcionalidades com **Next.js, React e TypeScript** para gestão de **produtos, pedidos, clientes e configurações**, incluindo formulários, filtros, estados de carregamento e upload de imagens.
+- **Autenticação e integração:** contribuí com fluxos de **login e autenticação multifator (MFA)**, tratamento de erros e integração entre interfaces e APIs por uma **camada BFF**.
+- **Ponto de venda (PDV):** participei do desenvolvimento de fluxos de **identificação de clientes, carrinho, aplicação de cupons, opções de frete e gerenciamento de pedidos**, com atenção à consistência dos estados da interface.
+- **Operações de e-commerce:** implementei correções e melhorias em rotinas de produtos e pedidos, além de ajustes de **responsividade** e usabilidade no storefront.
+- **Build, deploy e design:** investiguei falhas de compilação do **Next.js e Storybook** no **AWS Amplify**, trabalhei com configurações de build e variáveis de ambiente e utilizei **Figma** para reproduzir e organizar telas e componentes.
 
-**Linguagens**
+**Tecnologias e práticas:** `TypeScript` · `React` · `Next.js` · `BFF` · `APIs REST` · `styled-components` · `AWS Amplify` · `Storybook` · `Figma`
 
-![TypeScript](https://img.shields.io/badge/TypeScript-292442?style=flat-square&logo=typescript&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-292442?style=flat-square&logo=javascript&logoColor=white)
-![Python](https://img.shields.io/badge/Python-292442?style=flat-square&logo=python&logoColor=white)
-![Java](https://img.shields.io/badge/Java-292442?style=flat-square&logo=openjdk&logoColor=white)
+### SpaceOdyssey Code & Design — TerraBrasilis
 
-**Front-end**
+**Desenvolvedor Full Stack | 2024–2025**
 
-![React](https://img.shields.io/badge/React-292442?style=flat-square&logo=react&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-292442?style=flat-square&logo=nextdotjs&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-292442?style=flat-square&logo=tailwindcss&logoColor=white)
-![Sass](https://img.shields.io/badge/Sass%20%2F%20SCSS-292442?style=flat-square&logo=sass&logoColor=white)
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/exp-spaceodyssey-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/exp-spaceodyssey-light.svg" width="99%" alt="SpaceOdyssey — TerraBrasilis: plataforma de gestão de eventos desenvolvida com Next.js, TypeScript, NestJS e MongoDB; integrações Twilio/WhatsApp e check-in por QR Code." /></picture>
 
-**Back-end e dados**
+No projeto **TerraBrasilis**, trabalhei no desenvolvimento de uma **plataforma de gestão de eventos**, com funcionalidades para organização de eventos, interação com participantes e controle de check-in.
 
-![Node.js](https://img.shields.io/badge/Node.js-292442?style=flat-square&logo=nodedotjs&logoColor=white)
-![NestJS](https://img.shields.io/badge/NestJS-292442?style=flat-square&logo=nestjs&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-292442?style=flat-square&logo=mongodb&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-292442?style=flat-square&logo=mysql&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-292442?style=flat-square&logo=firebase&logoColor=white)
+- **Front-end:** prototipei telas no **Figma** e desenvolvi interfaces com **Next.js e TypeScript**, conectando os fluxos de uso às funcionalidades da plataforma.
+- **Back-end:** implementei funcionalidades e endpoints com **NestJS (Node.js)**, utilizando **MongoDB** para persistência de dados.
+- **Comunicação:** integrei o envio de mensagens por **WhatsApp via Twilio**, apoiando os fluxos de comunicação com os participantes.
+- **Gestão de participantes:** contribuí com os fluxos de eventos e com o **check-in por QR Code**, conectando as etapas de operação da plataforma.
 
-**Cloud, design e desenvolvimento**
+**Tecnologias e práticas:** `Next.js` · `TypeScript` · `NestJS` · `Node.js` · `MongoDB` · `Twilio` · `WhatsApp` · `QR Code` · `Figma`
 
-![AWS Amplify](https://img.shields.io/badge/AWS%20Amplify-292442?style=flat-square&logo=awsamplify&logoColor=white)
-![Git](https://img.shields.io/badge/Git-292442?style=flat-square&logo=git&logoColor=white)
-![Figma](https://img.shields.io/badge/Figma-292442?style=flat-square&logo=figma&logoColor=white)
-![Postman](https://img.shields.io/badge/Postman-292442?style=flat-square&logo=postman&logoColor=white)
-![Storybook](https://img.shields.io/badge/Storybook-292442?style=flat-square&logo=storybook&logoColor=white)
+### HealthDEV — SaúdeHD
 
----
+**Desenvolvedor Front-end | 2023–2024**
 
-## Experiência
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/exp-healthdev-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/exp-healthdev-light.svg" width="99%" alt="HealthDEV — SaúdeHD: desenvolvimento e manutenção de interfaces de uma aplicação web com React, TypeScript e Tailwind CSS; trabalho em sprints Scrum, pull requests e revisão de código no GitHub." /></picture>
 
-### E-commerce e Sistemas Administrativos
+Na **HealthDEV**, atuei no front-end do **SaúdeHD**, uma aplicação web, com foco em implementação e manutenção de interfaces e colaboração no desenvolvimento do produto.
 
-**WebStore**
+- Desenvolvi e mantive **telas e componentes** utilizando **React, TypeScript e Tailwind CSS**.
+- Trabalhei na **implementação de interfaces** e em ajustes necessários à evolução da aplicação.
+- Participei de **sprints Scrum**, utilizando **Git/GitHub**, **pull requests** e **revisão de código** no fluxo colaborativo da equipe.
 
-Desenvolvimento de painéis administrativos e storefronts, com autenticação e MFA, integrações via BFF, funcionalidades de PDV e experiência com AWS Amplify.
-
-`Painel administrativo` · `Storefront` · `MFA` · `BFF` · `PDV` · `AWS Amplify`
-
-### Desenvolvimento Full Stack
-
-**SpaceOdyssey Code & Design**
-
-Desenvolvimento de aplicações com Next.js, NestJS e MongoDB, integrações com Twilio/WhatsApp e funcionalidades de gestão de eventos.
-
-`Next.js` · `NestJS` · `MongoDB` · `Twilio/WhatsApp`
-
-### Desenvolvimento Front-end
-
-**HealthDEV**
-
-Construção e manutenção de interfaces com React, TypeScript e Tailwind CSS, utilizando Git/GitHub em fluxos colaborativos.
-
-`React` · `TypeScript` · `Tailwind CSS` · `Git/GitHub`
+**Tecnologias e práticas:** `React` · `TypeScript` · `Tailwind CSS` · `Git/GitHub` · `Scrum` · `Code Review`
 
 ---
 
-## Em foco
+## Tecnologias principais
 
-```yaml
-learning: [software architecture, automated testing, cloud fundamentals]
-building: [web applications, integrations, portfolio projects]
-open_to: [front-end junior, software developer junior, full stack junior]
-```
+**Front-end:** React, Next.js, TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Sass/SCSS e styled-components.  
+**Back-end e integrações:** Node.js, NestJS, APIs REST, BFF, MongoDB e MySQL.  
+**Ferramentas e ambiente:** Git/GitHub, Postman, Figma, Storybook e AWS Amplify.  
+**Outros conhecimentos:** Python, Java, Firebase, Jira, Kanban e Scrum.
+
+## Formação e desenvolvimento
+
+**Bacharelado em Ciência da Computação — Universidade de Fortaleza (Unifor)**  
+Conclusão prevista: **2027.1**.
+
+**Atualmente estudando:** arquitetura de software, testes automatizados e fundamentos de cloud.
 
 <div align="center">
-  <a href="mailto:pedrolmm123321@gmail.com"><b>Vamos conversar sobre desenvolvimento de software.</b></a>
+
+<a href="https://www.linkedin.com/in/pedro-luiz-moreira-mariano-001120175/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/btn-linkedin-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/btn-linkedin-light.svg" width="20%" alt="LinkedIn" /></picture></a><a href="mailto:pedrolmm123321@gmail.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/btn-email-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/btn-email-light.svg" width="20%" alt="Email" /></picture></a><a href="https://github.com/pedroluizmm"><picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/btn-github-dark.svg" /><img src="https://github.com/pedroluizmm/pedroluizmm/raw/main/assets/bento/btn-github-light.svg" width="20%" alt="GitHub" /></picture></a>
+
+**Vamos conversar sobre desenvolvimento de software.**
+
 </div>

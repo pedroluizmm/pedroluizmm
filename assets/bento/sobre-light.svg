@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="390" viewBox="0 0 600 390" role="img" aria-label="Sobre mim. Desenvolvedor de software com atuação em aplicações web desde 2023, experiência em React, Next.js, TypeScript, aplicações de e-commerce, PDV e integrações por BFF. Graduando em Ciência da Computação na Unifor, com conclusão prevista para 2027.1.">
+<style>
+.card{fill:#F8F6FF;stroke:#E2DCFA;stroke-width:1.2}
+text{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif}
+.mono{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}
+.txt{fill:#1D1933} .sec{fill:#57526F} .acc{fill:#6B46D9}
+.b{font-weight:600;fill:#1D1933}
+.chip{fill:#EDE7FE} .chipt{fill:#4C2A82}
+</style>
+<rect x="6" y="6" width="588" height="378" rx="22" class="card"/>
+<text x="36" y="58" class="acc mono" font-size="15">sobre mim</text>
+<text x="36" y="100" class="sec" font-size="19">Desenvolvedor de software com atuação em aplicações web</text>
+<text x="36" y="130" class="sec" font-size="19">desde 2023, experiência em <tspan class="b">React,</tspan> <tspan class="b">Next.js,</tspan> <tspan class="b">TypeScript</tspan>,</text>
+<text x="36" y="160" class="sec" font-size="19">aplicações de <tspan class="b">e-commerce,</tspan> <tspan class="b">PDV</tspan> e integrações por <tspan class="b">BFF</tspan>.</text>
+<text x="36" y="204" class="sec" font-size="19">Graduando em <tspan class="b">Ciência</tspan> <tspan class="b">da</tspan> <tspan class="b">Computação</tspan> <tspan class="b">na</tspan> <tspan class="b">Unifor</tspan>, com</text>
+<text x="36" y="234" class="sec" font-size="19">conclusão prevista para <tspan class="b">2027.1</tspan>.</text>
+</svg>
