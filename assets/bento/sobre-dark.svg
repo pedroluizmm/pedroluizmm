@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="390" viewBox="0 0 600 390" role="img" aria-label="Sobre mim. Desenvolvedor de software com atuação em aplicações web desde 2023, experiência em React, Next.js, TypeScript, aplicações de e-commerce, PDV e integrações por BFF. Graduando em Ciência da Computação na Unifor, com conclusão prevista para 2027.1.">
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="400" viewBox="0 0 520 400" role="img" aria-label="Sobre mim. Desenvolvedor Full Stack Júnior com experiência em React, Next.js e TypeScript no front-end e Node.js e NestJS no back-end, em projetos de e-commerce, PDV e integrações por BFF. Graduando em Ciência da Computação na Unifor, com conclusão prevista para 2027.1.">
 <style>
 .card{fill:#14111F;stroke:#2B2448;stroke-width:1.2}
 text{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif}
@@ -7,11 +7,14 @@ text{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Hel
 .b{font-weight:600;fill:#EEEBFA}
 .chip{fill:#221B3D} .chipt{fill:#CDBFFD}
 </style>
-<rect x="6" y="6" width="588" height="378" rx="22" class="card"/>
-<text x="36" y="58" class="acc mono" font-size="15">sobre mim</text>
-<text x="36" y="100" class="sec" font-size="19">Desenvolvedor de software com atuação em aplicações web</text>
-<text x="36" y="130" class="sec" font-size="19">desde 2023, experiência em <tspan class="b">React,</tspan> <tspan class="b">Next.js,</tspan> <tspan class="b">TypeScript</tspan>,</text>
-<text x="36" y="160" class="sec" font-size="19">aplicações de <tspan class="b">e-commerce,</tspan> <tspan class="b">PDV</tspan> e integrações por <tspan class="b">BFF</tspan>.</text>
-<text x="36" y="204" class="sec" font-size="19">Graduando em <tspan class="b">Ciência</tspan> <tspan class="b">da</tspan> <tspan class="b">Computação</tspan> <tspan class="b">na</tspan> <tspan class="b">Unifor</tspan>, com</text>
-<text x="36" y="234" class="sec" font-size="19">conclusão prevista para <tspan class="b">2027.1</tspan>.</text>
+<rect x="6" y="6" width="508" height="388" rx="22" class="card"/>
+<text x="36" y="62" class="acc mono" font-size="16">sobre mim</text>
+<text x="36" y="106" class="sec" font-size="22">Desenvolvedor <tspan class="b">Full Stack Júnior</tspan> com</text>
+<text x="36" y="140" class="sec" font-size="22">experiência em <tspan class="b">React, Next.js</tspan> e</text>
+<text x="36" y="174" class="sec" font-size="22"><tspan class="b">TypeScript</tspan> no front-end e <tspan class="b">Node.js</tspan> e</text>
+<text x="36" y="208" class="sec" font-size="22"><tspan class="b">NestJS</tspan> no back-end, em projetos de</text>
+<text x="36" y="242" class="sec" font-size="22"><tspan class="b">e-commerce, PDV</tspan> e integrações por <tspan class="b">BFF</tspan>.</text>
+<text x="36" y="298" class="sec" font-size="22">Graduando em <tspan class="b">Ciência da Computação</tspan></text>
+<text x="36" y="332" class="sec" font-size="22">na <tspan class="b">Unifor</tspan>, com conclusão prevista</text>
+<text x="36" y="366" class="sec" font-size="22">para <tspan class="b">2027.1</tspan>.</text>
 </svg>
