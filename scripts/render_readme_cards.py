@@ -7,21 +7,22 @@ Cada cartão é um SVG independente exibido via <img>, então só usa o que o Gi
 permite ali: animações CSS inline, SMIL e fontes embutidas como data URI (sem JS,
 sem requisições externas). As fontes são subconjuntos WOFF em fonts/ (SIL OFL).
 
-Os números vêm de data/contributions.json (fetch_contributions.py) e o retrato
-de data/portrait.txt (make_portrait.py). Os textos ficam nas constantes abaixo.
+Os números vêm de data/contributions.json (fetch_contributions.py) e
+o átomo binário é gerado aqui mesmo. Os textos ficam nas constantes abaixo.
 Só usa a biblioteca padrão. STATIC=1 gera os cartões no estado final, sem animação.
 """
 
 import base64
 import json
+import math
 import os
+import random
 from datetime import date
 from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "contributions.json"
-PORTRAIT = ROOT / "data" / "portrait.txt"
 OUT = ROOT / "cards"
 FONTS = ROOT / "fonts"
 STATIC = bool(os.environ.get("STATIC"))
@@ -188,21 +189,53 @@ def fmt(n):
 
 
 # ---- 1 · hero ---------------------------------------------------------------------
+def ellipse_len(a, b):
+    """Perímetro de uma elipse (aproximação de Ramanujan)."""
+    return math.pi * (3 * (a + b) - math.sqrt((3 * a + b) * (a + 3 * b)))
+
+
+def binary_atom(cx, cy, reach=150, petals=8, fs=9.5):
+    """Flor/átomo de pétalas em binário: os dígitos correm ao longo de cada pétala sem
+    parar (startOffset em SMIL) e a flor inteira gira devagar. Loop sem emenda: o texto
+    tem duas voltas idênticas e o deslocamento anda exatamente uma volta."""
+    rng = random.Random(7)
+    char_w = fs * 0.6  # avanço da Geist Mono
+    a, b = reach / 2, reach * 0.17
+    paths, texts = [], []
+
+    def flowing(pid, length, color, dur, reverse=False, opacity=1.0):
+        n = max(8, round(length / char_w))
+        bits = "".join(rng.choice("01") for _ in range(n))
+        frm, to = (0, -length) if reverse else (-length, 0)
+        anim = "" if STATIC else (f'<animate attributeName="startOffset" from="{frm:.2f}" to="{to:.2f}" '
+                                  f'dur="{dur}s" repeatCount="indefinite"/>')
+        return (f'<text font-family="{MONO}" font-size="{fs}" fill="{color}" opacity="{opacity}">'
+                f'<textPath href="#{pid}" startOffset="{frm:.2f}" textLength="{2 * length:.2f}" '
+                f'lengthAdjust="spacing">{bits * 2}{anim}</textPath></text>')
+
+    length = ellipse_len(a, b)
+    colors = [INK, ORANGE, PINK, AMBER]
+    for k in range(petals):
+        t = math.radians(k * 360 / petals)
+        ex, ey = cx + 2 * a * math.cos(t), cy + 2 * a * math.sin(t)
+        rot = math.degrees(t)
+        paths.append(f'<path id="pt{k}" d="M{cx} {cy} A{a:.2f} {b:.2f} {rot:.2f} 1 1 {ex:.2f} {ey:.2f} '
+                     f'A{a:.2f} {b:.2f} {rot:.2f} 1 1 {cx} {cy}" fill="none"/>')
+        texts.append(flowing(f"pt{k}", length, colors[k % len(colors)], 9 + (k % 3) * 1.5))
+
+    # anel central girando no sentido contrário
+    r = reach * 0.16
+    paths.append(f'<path id="ring" d="M{cx - r} {cy} A{r} {r} 0 1 1 {cx + r} {cy} A{r} {r} 0 1 1 {cx - r} {cy}" fill="none"/>')
+    texts.append(flowing("ring", 2 * math.pi * r, INK_SOFT, 7, reverse=True, opacity=.85))
+
+    spin = "" if STATIC else (f'<animateTransform attributeName="transform" type="rotate" '
+                              f'from="0 {cx} {cy}" to="360 {cx} {cy}" dur="60s" repeatCount="indefinite"/>')
+    return (f'<defs>{"".join(paths)}</defs>'
+            f'<g class="f" {d(0.4)}><g>{spin}{"".join(texts)}</g></g>')
+
+
 def hero():
     h = 420
-    rows = PORTRAIT.read_text(encoding="utf-8").split("\n") if PORTRAIT.exists() else []
-    if rows and not rows[-1]:
-        rows.pop()  # quebra de linha final
-    cols = max((len(r) for r in rows), default=1)
-    # desenhado num espaço de 800px e reduzido por transform (fontes minúsculas renderizam mal)
-    art, size, px, py = 800, 328, 520, 46
-    ch = art / max(len(rows), 1)  # retrato quadrado
-    portrait = "".join(
-        f'<text class="f" style="animation-delay:{0.25 + i * 0.018:.3f}s;animation-duration:.35s" '
-        f'xml:space="preserve" x="0" y="{(i + 0.74) * ch:.1f}" textLength="{art}" '
-        f'lengthAdjust="spacing">{escape(r.ljust(cols))}</text>'
-        for i, r in enumerate(rows) if r.strip()
-    )
     body = f"""
 <defs>
   <linearGradient id="shine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
@@ -226,7 +259,7 @@ def hero():
   <text x="48" y="396" font-family="{MONO}" font-size="13" fill="{INK}" xml:space="preserve">{escape(FOOT[:-8])}<tspan fill="{ORANGE}" font-weight="700">{escape(FOOT[-8:])}</tspan></text>
   <text class="nu" x="{48 + (len(FOOT) + 1) * 7.8:.0f}" y="396" font-family="{MONO}" font-size="13" fill="{ORANGE}">&#8599;</text>
 </g>
-<g transform="translate({px} {py}) scale({size / art})" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="{ch * 0.86:.1f}" fill="{INK}">{portrait}</g>
+{binary_atom(690, 205)}
 """
     write("hero.svg", W, h, body, ALL_FONTS, HERO_LABEL)
 
