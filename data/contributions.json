@@ -1,11 +1,11 @@
 {
  "username": "pedroluizmm",
- "total": 41,
+ "total": 43,
  "current_streak": 2,
  "longest_streak": 2,
  "best_day": {
-  "date": "2026-11-01",
-  "count": 7
+  "date": "2026-11-14",
+  "count": 8
  },
  "days": [
   {
@@ -85,7 +85,7 @@
   },
   {
    "date": "2025-11-24",
-   "level": 2,
+   "level": 1,
    "count": 2
   },
   {
@@ -1060,7 +1060,7 @@
   },
   {
    "date": "2026-06-07",
-   "level": 2,
+   "level": 1,
    "count": 2
   },
   {
@@ -1525,7 +1525,7 @@
   },
   {
    "date": "2026-09-08",
-   "level": 2,
+   "level": 1,
    "count": 2
   },
   {
@@ -1745,7 +1745,7 @@
   },
   {
    "date": "2026-10-22",
-   "level": 3,
+   "level": 2,
    "count": 4
   },
   {
@@ -1835,7 +1835,7 @@
   },
   {
    "date": "2026-11-09",
-   "level": 2,
+   "level": 1,
    "count": 2
   },
   {
@@ -1861,7 +1861,7 @@
   {
    "date": "2026-11-14",
    "level": 4,
-   "count": 6
+   "count": 8
   }
  ]
 }
