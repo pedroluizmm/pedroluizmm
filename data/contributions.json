@@ -1,11 +1,11 @@
 {
  "username": "pedroluizmm",
- "total": 43,
+ "total": 45,
  "current_streak": 2,
  "longest_streak": 2,
  "best_day": {
   "date": "2026-11-14",
-  "count": 8
+  "count": 10
  },
  "days": [
   {
@@ -1795,7 +1795,7 @@
   },
   {
    "date": "2026-11-01",
-   "level": 4,
+   "level": 3,
    "count": 7
   },
   {
@@ -1861,7 +1861,7 @@
   {
    "date": "2026-11-14",
    "level": 4,
-   "count": 8
+   "count": 10
   }
  ]
 }
