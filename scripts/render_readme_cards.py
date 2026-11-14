@@ -8,7 +8,7 @@ permite ali: animações CSS inline, SMIL e fontes embutidas como data URI (sem 
 sem requisições externas). As fontes são subconjuntos WOFF em fonts/ (SIL OFL).
 
 Os números vêm de data/contributions.json (fetch_contributions.py) e
-o átomo binário é gerado aqui mesmo. Os textos ficam nas constantes abaixo.
+a moeda com o P é desenhada aqui mesmo. Os textos ficam nas constantes abaixo.
 Só usa a biblioteca padrão. STATIC=1 gera os cartões no estado final, sem animação.
 """
 
@@ -189,49 +189,104 @@ def fmt(n):
 
 
 # ---- 1 · hero ---------------------------------------------------------------------
-def ellipse_len(a, b):
-    """Perímetro de uma elipse (aproximação de Ramanujan)."""
-    return math.pi * (3 * (a + b) - math.sqrt((3 * a + b) * (a + 3 * b)))
+def p_coin(cx, cy, r=122):
+    """Moeda dourada com circuito e um "P" no centro. Gira em falso 3D (escala X com
+    borda deslocada), pulsos de luz correm pelas trilhas e LEDs piscam. Tudo em SMIL."""
+    rng = random.Random(11)
+    spin_dur = 7
+    sp = 'calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"'
 
+    def anim(attr, values, dur, extra=""):
+        return "" if STATIC else (f'<animate attributeName="{attr}" values="{values}" dur="{dur}s" '
+                                  f'repeatCount="indefinite" {extra}/>')
 
-def binary_atom(cx, cy, reach=150, petals=8, fs=9.5):
-    """Flor/átomo de pétalas em binário: os dígitos correm ao longo de cada pétala sem
-    parar (startOffset em SMIL) e a flor inteira gira devagar. Loop sem emenda: o texto
-    tem duas voltas idênticas e o deslocamento anda exatamente uma volta."""
-    rng = random.Random(7)
-    char_w = fs * 0.6  # avanço da Geist Mono
-    a, b = reach / 2, reach * 0.17
-    paths, texts = [], []
+    def spin(extra_translate=None):
+        if STATIC:
+            return ""
+        out = (f'<animateTransform attributeName="transform" type="scale" values="1 1;.34 1;1 1" '
+               f'dur="{spin_dur}s" repeatCount="indefinite" {sp}/>')
+        if extra_translate:
+            out += (f'<animateTransform attributeName="transform" type="translate" values="0 0;{extra_translate} 0;0 0" '
+                    f'dur="{spin_dur}s" repeatCount="indefinite" additive="sum" {sp}/>')
+        return out
 
-    def flowing(pid, length, color, dur, reverse=False, opacity=1.0):
-        n = max(8, round(length / char_w))
-        bits = "".join(rng.choice("01") for _ in range(n))
-        frm, to = (0, -length) if reverse else (-length, 0)
-        anim = "" if STATIC else (f'<animate attributeName="startOffset" from="{frm:.2f}" to="{to:.2f}" '
-                                  f'dur="{dur}s" repeatCount="indefinite"/>')
-        return (f'<text font-family="{MONO}" font-size="{fs}" fill="{color}" opacity="{opacity}">'
-                f'<textPath href="#{pid}" startOffset="{frm:.2f}" textLength="{2 * length:.2f}" '
-                f'lengthAdjust="spacing">{bits * 2}{anim}</textPath></text>')
+    def polar(rad, ang):
+        return rad * math.cos(ang), rad * math.sin(ang)
 
-    length = ellipse_len(a, b)
-    colors = [INK, ORANGE, PINK, AMBER]
-    for k in range(petals):
-        t = math.radians(k * 360 / petals)
-        ex, ey = cx + 2 * a * math.cos(t), cy + 2 * a * math.sin(t)
-        rot = math.degrees(t)
-        paths.append(f'<path id="pt{k}" d="M{cx} {cy} A{a:.2f} {b:.2f} {rot:.2f} 1 1 {ex:.2f} {ey:.2f} '
-                     f'A{a:.2f} {b:.2f} {rot:.2f} 1 1 {cx} {cy}" fill="none"/>')
-        texts.append(flowing(f"pt{k}", length, colors[k % len(colors)], 9 + (k % 3) * 1.5))
+    # trilhas de circuito: saem perto do P, dobram 45° e terminam num pad
+    traces, pads, pulses = [], [], []
+    n = 22
+    for k in range(n):
+        ang = 2 * math.pi * k / n + rng.uniform(-.05, .05)
+        r0 = rng.uniform(64, 70)
+        r1 = rng.uniform(76, 84)
+        r2 = rng.uniform(88, 96)
+        bend = rng.choice([-.13, .13])
+        pts = [polar(r0, ang), polar(r1, ang), polar(r2, ang + bend)]
+        dpath = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in pts)
+        traces.append(dpath)
+        px, py = pts[-1]
+        pads.append((px, py, k))
+        seg = sum(math.dist(pts[i], pts[i + 1]) for i in range(2))
+        if k % 2 == 0:
+            dur = rng.uniform(1.6, 2.6)
+            pulses.append(
+                f'<path d="{dpath}" fill="none" stroke="#fff6d8" stroke-width="2.2" stroke-linecap="round" '
+                f'stroke-dasharray="5 {seg + 20:.0f}" stroke-dashoffset="{seg + 5:.1f}" opacity=".95">'
+                + anim("stroke-dashoffset", f"{seg + 5:.1f};-{seg + 5:.1f}", f"{dur:.2f}",
+                       f'begin="{rng.uniform(0, 2):.2f}s"') + '</path>')
 
-    # anel central girando no sentido contrário
-    r = reach * 0.16
-    paths.append(f'<path id="ring" d="M{cx - r} {cy} A{r} {r} 0 1 1 {cx + r} {cy} A{r} {r} 0 1 1 {cx - r} {cy}" fill="none"/>')
-    texts.append(flowing("ring", 2 * math.pi * r, INK_SOFT, 7, reverse=True, opacity=.85))
+    trace_svg = "".join(f'<path d="{t}"/>' for t in traces)
+    pad_svg = "".join(
+        f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.6" fill="url(#gold)" stroke="#5a3200" stroke-width=".8"/>'
+        f'<circle cx="{x:.1f}" cy="{y:.1f}" r="1.3" fill="#fffbe6" opacity="0">'
+        + anim("opacity", "0;1;0", f"{rng.uniform(1.2, 2.4):.2f}", f'begin="{rng.uniform(0, 2):.2f}s"')
+        + '</circle>'
+        for x, y, k in pads
+    )
 
-    spin = "" if STATIC else (f'<animateTransform attributeName="transform" type="rotate" '
-                              f'from="0 {cx} {cy}" to="360 {cx} {cy}" dur="60s" repeatCount="indefinite"/>')
-    return (f'<defs>{"".join(paths)}</defs>'
-            f'<g class="f" {d(0.4)}><g>{spin}{"".join(texts)}</g></g>')
+    # serrilhado da borda
+    reed = 2 * math.pi * (r - 3)
+    edge_teeth = f'<circle r="{r - 3}" fill="none" stroke="#7a4300" stroke-width="5" stroke-dasharray="2 {reed / 120 - 2:.2f}"/>'
+
+    face = f"""
+<circle r="{r}" fill="url(#gold)"/>
+{edge_teeth}
+<circle r="{r - 9}" fill="url(#face)" stroke="#ffe08a" stroke-width="1.6"/>
+<circle r="{r - 15}" fill="none" stroke="#c77700" stroke-width="1"/>
+<circle r="{r - 20}" fill="none" stroke="#ffd36b" stroke-width=".8" stroke-opacity=".6"/>
+<g fill="none" stroke="#ffc94a" stroke-width="1.6" stroke-linejoin="round" opacity=".85">{trace_svg}</g>
+{''.join(pulses)}
+{pad_svg}
+<circle r="58" fill="url(#face)" stroke="#ffe08a" stroke-width="1.2"/>
+<g font-family="{SERIF}" font-size="138" text-anchor="middle">
+  <g stroke="#ffd36b" stroke-width="5" stroke-linecap="round">
+    <line x1="-10" y1="-62" x2="-10" y2="-46"/><line x1="6" y1="-62" x2="6" y2="-46"/>
+    <line x1="-10" y1="40" x2="-10" y2="56"/><line x1="6" y1="40" x2="6" y2="56"/>
+  </g>
+  <text x="3" y="47" fill="#4a2600">P</text>
+  <text x="0" y="44" fill="url(#gold)" stroke="#fff1c2" stroke-width="1.2">P</text>
+</g>
+<ellipse cx="-40" cy="-60" rx="58" ry="22" transform="rotate(-35 -40 -60)" fill="#fff" opacity=".10"/>
+"""
+    return f"""
+<defs>
+  <radialGradient id="gold" cx=".35" cy=".3" r=".8">
+    <stop offset="0" stop-color="#fff0b0"/><stop offset=".45" stop-color="{AMBER}"/>
+    <stop offset=".8" stop-color="{ORANGE}"/><stop offset="1" stop-color="#a14d00"/>
+  </radialGradient>
+  <radialGradient id="face" cx=".4" cy=".35" r=".9">
+    <stop offset="0" stop-color="#6b3a12"/><stop offset=".7" stop-color="#3f1d0c"/><stop offset="1" stop-color="#2a1208"/>
+  </radialGradient>
+  <radialGradient id="halo"><stop offset="0" stop-color="{ORANGE}" stop-opacity=".45"/>
+    <stop offset=".6" stop-color="{MAGENTA}" stop-opacity=".12"/><stop offset="1" stop-color="{MAGENTA}" stop-opacity="0"/></radialGradient>
+</defs>
+<g class="f" {d(0.4)}><g transform="translate({cx} {cy})">
+  <circle r="{r * 1.45:.0f}" fill="url(#halo)">{anim("opacity", "1;.55;1", 3.5)}</circle>
+  <g><circle r="{r}" fill="#5a2c00"/><circle r="{r - 2}" fill="#8a4a00"/>{spin(10)}</g>
+  <g>{face}{spin()}</g>
+</g></g>
+"""
 
 
 def hero():
@@ -259,7 +314,7 @@ def hero():
   <text x="48" y="396" font-family="{MONO}" font-size="13" fill="{INK}" xml:space="preserve">{escape(FOOT[:-8])}<tspan fill="{ORANGE}" font-weight="700">{escape(FOOT[-8:])}</tspan></text>
   <text class="nu" x="{48 + (len(FOOT) + 1) * 7.8:.0f}" y="396" font-family="{MONO}" font-size="13" fill="{ORANGE}">&#8599;</text>
 </g>
-{binary_atom(690, 205)}
+{p_coin(690, 208)}
 """
     write("hero.svg", W, h, body, ALL_FONTS, HERO_LABEL)
 
