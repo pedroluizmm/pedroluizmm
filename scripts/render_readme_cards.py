@@ -1,7 +1,7 @@
 """Desenha os cartões do README como SVGs animados em cards/.
 
-Design "papel e tinta" inspirado no perfil de AVIVASHISHTA29: cartões claros,
-Instrument Serif + Geist + Geist Mono e uma cor por bloco (azul, vermelho, amarelo).
+Layout inspirado no perfil de AVIVASHISHTA29, com paleta "pôr do sol" tirada do avatar:
+cartões em degradê roxo, Instrument Serif + Geist + Geist Mono e laranja/magenta/violeta.
 
 Cada cartão é um SVG independente exibido via <img>, então só usa o que o GitHub
 permite ali: animações CSS inline, SMIL e fontes embutidas como data URI (sem JS,
@@ -58,11 +58,13 @@ JOBS = [
 ]
 
 # ---- tokens ---------------------------------------------------------------------
-PAPER, PAPER_DEEP = "#f3f3f1", "#e2e2de"
-INK, INK_SOFT, MUTED, RULE = "#111111", "#3a3a3c", "#6e6e73", "#dcdcd7"
-BLUE, RED, YELLOW = "#2f55ff", "#ef3b2d", "#ffc81a"
-COLORS = [(BLUE, "#ffffff"), (RED, "#ffffff"), (YELLOW, INK)]  # (fundo, texto)
-RAMP = [PAPER_DEEP, "#c8d3ff", "#94a8ff", "#6280ff", BLUE]
+# paleta "pôr do sol" tirada do avatar: roxo profundo, magenta e laranja
+NIGHT, DUSK, PLUM = "#1d0b2f", "#3b1033", "#2c0e45"  # fundo dos cartões (degradê)
+INK, INK_SOFT, MUTED, RULE = "#fff6ec", "#ead9e8", "#c5aecb", "#5b3768"  # textos claros
+ORANGE, AMBER, PINK, MAGENTA, VIOLET = "#ff8a1f", "#ffb347", "#ff4f8b", "#d633a8", "#7b2fd0"
+BAR, EMPTY = "#6b2a8a", "#3a1a4c"
+COLORS = [(ORANGE, NIGHT), (MAGENTA, "#ffffff"), (VIOLET, "#ffffff")]  # (fundo, texto)
+RAMP = [EMPTY, "#a02c93", PINK, ORANGE, AMBER]
 W = 880  # largura total: a coluna do README do GitHub a 100%
 GAP = 12  # respiro entre cartões, embutido nos SVGs
 
@@ -111,6 +113,29 @@ BASE_CSS = """
 """
 FROZEN = ANIMATED + "{animation:none!important;opacity:1!important;transform:none!important}.sh,.rg{display:none}"
 BASE_CSS += "@media (prefers-reduced-motion: reduce){" + FROZEN + "}"
+
+
+def card(w, h, wave=True, flip=False):
+    """Fundo do cartão: degradê roxo, borda laranja->magenta e ondas no canto."""
+    a = min(130, h * 0.42)
+    waves = (
+        f'<g clip-path="url(#cclip)">'
+        f'<path d="M{w * .42:.0f} {h} C{w * .62:.0f} {h - a * .1:.0f},{w * .78:.0f} {h - a * .95:.0f},{w} {h - a:.0f} L{w} {h} Z" fill="{MAGENTA}" opacity=".30"/>'
+        f'<path d="M{w * .60:.0f} {h} C{w * .76:.0f} {h - a * .05:.0f},{w * .86:.0f} {h - a * .6:.0f},{w} {h - a * .62:.0f} L{w} {h} Z" fill="url(#cwave)" opacity=".85"/>'
+        f'</g>' if wave else "")
+    if wave and flip:  # onda no canto inferior esquerdo
+        waves = waves.replace('<g clip-path="url(#cclip)">', f'<g clip-path="url(#cclip)"><g transform="translate({w} 0) scale(-1 1)">', 1).replace('</g>', '</g></g>', 1)
+    return (
+        f'<defs><linearGradient id="cbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{DUSK}"/>'
+        f'<stop offset=".55" stop-color="{NIGHT}"/><stop offset="1" stop-color="{PLUM}"/></linearGradient>'
+        f'<linearGradient id="cbd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{ORANGE}"/>'
+        f'<stop offset=".5" stop-color="{MAGENTA}"/><stop offset="1" stop-color="{VIOLET}"/></linearGradient>'
+        f'<linearGradient id="cwave" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="{MAGENTA}"/>'
+        f'<stop offset="1" stop-color="{ORANGE}"/></linearGradient>'
+        f'<clipPath id="cclip"><rect width="{w}" height="{h}" rx="14"/></clipPath></defs>'
+        f'<rect width="{w}" height="{h}" rx="14" fill="url(#cbg)"/>{waves}'
+        f'<rect x=".75" y=".75" width="{w - 1.5}" height="{h - 1.5}" rx="13.25" fill="none" stroke="url(#cbd)" stroke-width="1.5"/>'
+    )
 
 
 def font_face(keys):
@@ -181,15 +206,15 @@ def hero():
     body = f"""
 <defs>
   <linearGradient id="shine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
-    <stop offset="0" stop-color="{INK}"/><stop offset=".42" stop-color="{INK}"/>
-    <stop offset=".5" stop-color="{BLUE}"/><stop offset=".58" stop-color="{INK}"/>
-    <stop offset="1" stop-color="{INK}"/>
+    <stop offset="0" stop-color="{ORANGE}"/><stop offset=".42" stop-color="{ORANGE}"/>
+    <stop offset=".5" stop-color="#ffe2a8"/><stop offset=".58" stop-color="{ORANGE}"/>
+    <stop offset="1" stop-color="{ORANGE}"/>
     {'' if STATIC else '<animateTransform attributeName="gradientTransform" type="translate" values="-600 0;600 0;600 0" keyTimes="0;.45;1" dur="7s" begin="1.6s" repeatCount="indefinite"/>'}
   </linearGradient>
 </defs>
-<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
+{card(W, h)}
 <g class="f" {d(0)}>
-  <rect class="live" x="48" y="49" width="8" height="8" rx="2" fill="{BLUE}"/>
+  <rect class="live" x="48" y="49" width="8" height="8" rx="2" fill="{ORANGE}"/>
   <text x="66" y="57" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">{escape(ROLE)}</text>
 </g>
 <text class="r" {d(0.15)} x="44" y="190" font-family="{SERIF}" font-size="116" letter-spacing="-2.5" fill="{INK}">{escape(FIRST)}</text>
@@ -198,15 +223,15 @@ def hero():
   {text_lines(48, 338, TAGLINE, 27, f'font-family="{SANS}" font-size="18" fill="{INK_SOFT}"')}
 </g>
 <g class="f" {d(0.8)}>
-  <text x="48" y="396" font-family="{MONO}" font-size="13" fill="{INK}" xml:space="preserve">{escape(FOOT)}</text>
-  <text class="nu" x="{48 + (len(FOOT) + 1) * 7.8:.0f}" y="396" font-family="{MONO}" font-size="13" fill="{BLUE}">&#8599;</text>
+  <text x="48" y="396" font-family="{MONO}" font-size="13" fill="{INK}" xml:space="preserve">{escape(FOOT[:-8])}<tspan fill="{ORANGE}" font-weight="700">{escape(FOOT[-8:])}</tspan></text>
+  <text class="nu" x="{48 + (len(FOOT) + 1) * 7.8:.0f}" y="396" font-family="{MONO}" font-size="13" fill="{ORANGE}">&#8599;</text>
 </g>
 <g transform="translate({px} {py}) scale({size / art})" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="{ch * 0.86:.1f}" fill="{INK}">{portrait}</g>
 """
     write("hero.svg", W, h, body, ALL_FONTS, HERO_LABEL)
 
 
-# ---- 2 · gráfico de contribuições azul ----------------------------------------------
+# ---- 2 · gráfico de contribuições ----------------------------------------------
 def heatmap(data):
     days = data["days"]
     lead = (date.fromisoformat(days[0]["date"]).weekday() + 1) % 7  # domingo = 0
@@ -237,8 +262,8 @@ def heatmap(data):
     )
     h = ly + 44
     body = f"""
-<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
-<text class="r" {d(0.8)} x="42" y="62" font-family="{SERIF}" font-size="34" fill="{INK}">Dia a dia, <tspan font-style="italic" fill="{BLUE}">em azul</tspan></text>
+{card(W, h, wave=False)}
+<text class="r" {d(0.8)} x="42" y="62" font-family="{SERIF}" font-size="34" fill="{INK}">Dia a dia, <tspan font-style="italic" fill="{PINK}">no código</tspan></text>
 <text class="f" {d(0.8)} x="{right}" y="60" text-anchor="end" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">ATUALIZADO DIARIAMENTE</text>
 {''.join(cells)}
 <g class="f" {d(2.4)}>{labels}
@@ -266,7 +291,7 @@ def activity(data):
         bh = max(4, round(total / top * maxh))
         x = x0 + i * (bw + gap)
         is_best = i == best_i and total > 0
-        fill = BLUE if is_best else ("#c9c9c4" if total == 0 else INK)
+        fill = ORANGE if is_best else (EMPTY if total == 0 else BAR)
         label = MONTHS[int(month[5:]) - 1]
         delay = 2.2 + i * 0.07
         bars.append(
@@ -277,7 +302,7 @@ def activity(data):
         )
         if is_best:
             bars.append(f'<text class="p" style="animation-delay:3.2s" x="{x + bw / 2:.1f}" y="{base - bh - 10}" '
-                        f'text-anchor="middle" font-family="{MONO}" font-size="11" fill="{BLUE}">{fmt(total)}</text>')
+                        f'text-anchor="middle" font-family="{MONO}" font-size="11" fill="{ORANGE}">{fmt(total)}</text>')
 
     cs, ls = data["current_streak"], data["longest_streak"]
     if cs and cs >= ls:
@@ -289,7 +314,7 @@ def activity(data):
     active = sum(1 for day in data["days"] if day["count"])
     stats = [
         (f'{streak} <tspan font-style="italic">{"dia" if streak == 1 else "dias"}</tspan>', note),
-        (f'{active}<tspan fill="#8e8e93"> / {len(data["days"])}</tspan>', "dias com contribuição"),
+        (f'{active}<tspan fill="{MUTED}"> / {len(data["days"])}</tspan>', "dias com contribuição"),
         (f'{data["best_day"]["count"]}', "no dia mais ativo"),
     ]
     side = []
@@ -302,9 +327,9 @@ def activity(data):
             side.append(f'<rect class="f" {d(2.6)} x="650" y="{y + 44}" width="190" height="1" fill="{RULE}"/>')
     word = "contribuição" if data["total"] == 1 else "contribuições"
     body = f"""
-<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
+{card(W, h, flip=True)}
 <text class="f" {d(1.9)} x="40" y="58" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">OS ÚLTIMOS 12 MESES NO GITHUB</text>
-<text class="r" {d(2.0)} x="38" y="114" font-family="{SERIF}" font-size="52" fill="{INK}">{fmt(data["total"])} <tspan font-style="italic">{word}</tspan></text>
+<text class="r" {d(2.0)} x="38" y="114" font-family="{SERIF}" font-size="52" fill="{INK}">{fmt(data["total"])} <tspan font-style="italic" fill="{ORANGE}">{word}</tspan></text>
 {''.join(bars)}
 {''.join(side)}
 """
@@ -353,7 +378,7 @@ JOB_W, JOB_H = W / 3 - 8, 176
 
 def job_card(pos, name, title, desc, role):
     body = f"""
-<rect width="{JOB_W:.3f}" height="{JOB_H}" rx="14" fill="{PAPER}"/>
+{card(round(JOB_W, 3), JOB_H, wave=False)}
 <g class="r" {d(4.6 + pos * 0.12)}>
   <rect x="24" y="30" width="8" height="8" rx="2" fill="{COLORS[pos][0]}"/>
   <text x="40" y="39" font-family="{SANS}" font-weight="600" font-size="18" fill="{INK}">{escape(title)}</text>
@@ -366,7 +391,7 @@ def job_card(pos, name, title, desc, role):
 
 
 def section_title(name, text, italic, theme):
-    fg = "#e6edf3" if theme == "dark" else INK
+    fg = "#e6edf3" if theme == "dark" else "#111111"
     body = (f'<text class="r" {d(4.4)} x="2" y="46" font-family="{SERIF}" font-size="34" fill="{fg}">{escape(text)} '
             f'<tspan font-style="italic">{escape(italic)}</tspan></text>')
     write(f"title-{name}-{theme}.svg", W, 64, body, ["serif", "serif-i"], f"{text} {italic}", bottom=0)
