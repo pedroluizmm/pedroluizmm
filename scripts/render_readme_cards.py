@@ -189,15 +189,33 @@ def fmt(n):
 
 
 # ---- 1 · hero ---------------------------------------------------------------------
-def p_coin(cx, cy, r=118, thick=18, dur=11, layers=16, samples=72):
-    """Moeda dourada minimalista com um "P". Gira 360° em falso 3D: cada camada da borda
-    é um círculo achatado (escala X = cos θ) e deslocado (x = z·sen θ), o que dá corpo à
-    moeda. Frente e verso trocam no meio do giro; o verso é desenhado espelhado para o P
-    sempre aparecer legível. Tudo em SMIL, funciona dentro do <img> do GitHub."""
+def in_p(x, y):
+    """Silhueta do "P" (com os tracinhos de moeda), em coordenadas da moeda."""
+    if -42 <= x <= -10 and -60 <= y <= 56:  # haste
+        return True
+    if -56 <= x <= 6 and 44 <= y <= 58:  # serifa de baixo
+        return True
+    if -56 <= x <= -10 and -64 <= y <= -48:  # serifa de cima
+        return True
+    if x >= -12:  # bojo
+        ox, oy, ix, iy = (x + 12) / 56, (y + 16) / 48, (x + 12) / 26, (y + 16) / 20
+        if ox * ox + oy * oy <= 1 and not (ix * ix + iy * iy <= 1 and x > -10):
+            return True
+    if (-40 <= x <= -32 or -20 <= x <= -12) and (-84 <= y <= -60 or 56 <= y <= 80):  # tracinhos
+        return True
+    return False
+
+
+def p_coin(cx, cy, r=118, thick=18, dur=11, layers=14, samples=72):
+    """Moeda feita de 0 e 1 com um "P". Gira 360° em falso 3D: cada camada da borda é um
+    anel de dígitos achatado (escala X = cos θ) e deslocado (x = z·sen θ), o que dá corpo.
+    O verso é a frente espelhada dentro do grupo que gira, então o P e os dígitos sempre
+    aparecem do lado certo. Tudo em SMIL, funciona dentro do <img> do GitHub."""
+    rng = random.Random(5)
     thetas = [2 * math.pi * i / samples for i in range(samples + 1)]
+    sx, sy, fs = 6.6, 8.4, 9.6  # passo da grade e tamanho dos dígitos
 
     def spin(z):
-        """Animações de escala + deslocamento para uma camada na profundidade z."""
         if STATIC:
             return "", ""
         tr = ";".join(f"{z * math.sin(t):.2f} 0" for t in thetas)
@@ -212,54 +230,67 @@ def p_coin(cx, cy, r=118, thick=18, dur=11, layers=16, samples=72):
         return (f'<animate attributeName="opacity" values="{vals}" keyTimes="0;.25;.75" calcMode="discrete" '
                 f'dur="{dur}s" repeatCount="indefinite"/>')
 
-    # borda: camadas do fundo para a frente, um pouco mais claras perto das faces
+    # face: grade de dígitos, cada célula classificada em aro / P / fundo
+    styles = {"rim": 'fill="url(#gold)"', "p": 'fill="#ffe7a3"', "ring": f'fill="{ORANGE}" fill-opacity=".4"',
+              "bg": f'fill="{ORANGE}" fill-opacity=".12"'}
+    cols = int(2 * r / sx) + 1
+    rows = int(2 * r / sy) + 1
+    x0, y0 = -(cols - 1) * sx / 2, -(rows - 1) * sy / 2
+    lines = []
+    for j in range(rows):
+        y = y0 + j * sy
+        runs, cur, buf = [], None, ""
+        for i in range(cols):
+            x = x0 + i * sx
+            dist = math.hypot(x, y)
+            kind = (None if dist > r else "rim" if dist > r - 13 else "ring" if dist > r - 19
+                    else "p" if in_p(x, y) else "bg")
+            ch = " " if kind is None else rng.choice("01")
+            if kind != cur and buf:
+                runs.append((cur, buf))
+                buf = ""
+            cur, buf = kind, buf + ch
+        runs.append((cur, buf))
+        if all(k is None for k, _ in runs):
+            continue
+        spans = "".join(f"<tspan {styles[k]}>{b}</tspan>" if k else b for k, b in runs)
+        lines.append(f'<text x="{x0 - sx * .3:.1f}" y="{y + fs * .36:.1f}" textLength="{cols * sx:.1f}" '
+                     f'lengthAdjust="spacing" xml:space="preserve">{spans}</text>')
+    face = (f'<g font-family="{MONO}" font-size="{fs}" font-weight="400">{"".join(lines)}</g>'
+            f'<ellipse cx="-38" cy="-58" rx="62" ry="22" transform="rotate(-35 -38 -58)" fill="#fff" opacity=".07"/>')
+
+    # borda: anéis de dígitos em camadas, mais escuros no meio da espessura
+    ring_len = 2 * math.pi * (r - 5)
+    nring = int(ring_len / sx)
     edge = []
     for i in range(layers):
         z = -thick / 2 + thick * i / (layers - 1)
-        shade = 1 - abs(z) / (thick / 2)
-        col = "#8a4600" if i % 2 else "#9c5300"
-        col = "#b8650c" if shade > .7 else col
+        col = "#c2650a" if abs(z) > thick * .35 else "#8a4600"
+        bits = "".join(rng.choice("01") for _ in range(nring))
         tr, sc = spin(z)
-        edge.append(f'<g>{tr}<circle r="{r}" fill="{col}">{sc}</circle></g>')
-
-    def face(mirror):
-        flip = ' transform="scale(-1 1)"' if mirror else ""
-        return f"""
-<circle r="{r}" fill="url(#gold)"/>
-<circle r="{r - 10}" fill="url(#face)" stroke="#ffe08a" stroke-width="1.6"/>
-<circle r="{r - 17}" fill="none" stroke="{AMBER}" stroke-width="1" stroke-opacity=".55"/>
-<g{flip}>
-  <g stroke="#ffd36b" stroke-width="6" stroke-linecap="round">
-    <line x1="-12" y1="-74" x2="-12" y2="-56"/><line x1="8" y1="-74" x2="8" y2="-56"/>
-    <line x1="-12" y1="48" x2="-12" y2="66"/><line x1="8" y1="48" x2="8" y2="66"/>
-  </g>
-  <g font-family="{SERIF}" font-size="168" text-anchor="middle">
-    <text x="4" y="58" fill="#3a1a06">P</text>
-    <text x="0" y="54" fill="url(#gold)" stroke="#fff1c2" stroke-width="1.2">P</text>
-  </g>
-</g>
-<ellipse cx="-38" cy="-58" rx="62" ry="22" transform="rotate(-35 -38 -58)" fill="#fff" opacity=".10"/>"""
+        edge.append(f'<g>{tr}<g>{sc}<circle r="{r - 2}" fill="#2a1208" opacity=".55"/>'
+                    f'<text font-family="{MONO}" font-size="{fs}" fill="{col}"><textPath href="#rimpath" '
+                    f'textLength="{ring_len:.1f}" lengthAdjust="spacing">{bits}</textPath></text></g></g>')
 
     ftr, fsc = spin(thick / 2)
     btr, bsc = spin(-thick / 2)
     pulse = "" if STATIC else '<animate attributeName="opacity" values="1;.55;1" dur="4s" repeatCount="indefinite"/>'
+    rr = r - 5
     return f"""
 <defs>
   <radialGradient id="gold" cx=".35" cy=".3" r=".8">
     <stop offset="0" stop-color="#fff0b0"/><stop offset=".45" stop-color="{AMBER}"/>
-    <stop offset=".8" stop-color="{ORANGE}"/><stop offset="1" stop-color="#a14d00"/>
-  </radialGradient>
-  <radialGradient id="face" cx=".4" cy=".35" r=".9">
-    <stop offset="0" stop-color="#6b3a12"/><stop offset=".7" stop-color="#3f1d0c"/><stop offset="1" stop-color="#2a1208"/>
+    <stop offset=".8" stop-color="{ORANGE}"/><stop offset="1" stop-color="#c25e00"/>
   </radialGradient>
   <radialGradient id="halo"><stop offset="0" stop-color="{ORANGE}" stop-opacity=".45"/>
     <stop offset=".6" stop-color="{MAGENTA}" stop-opacity=".12"/><stop offset="1" stop-color="{MAGENTA}" stop-opacity="0"/></radialGradient>
+  <path id="rimpath" d="M{-rr} 0 A{rr} {rr} 0 1 1 {rr} 0 A{rr} {rr} 0 1 1 {-rr} 0"/>
 </defs>
 <g class="f" {d(0.4)}><g transform="translate({cx} {cy})">
   <circle r="{r * 1.5:.0f}" fill="url(#halo)">{pulse}</circle>
   {''.join(edge)}
-  <g opacity="0">{btr}<g>{bsc}{face(True)}</g>{show(False)}</g>
-  <g>{ftr}<g>{fsc}{face(False)}</g>{show(True)}</g>
+  <g opacity="0">{btr}<g>{bsc}<circle r="{r}" fill="#2a1208" opacity=".7"/><g transform="scale(-1 1)">{face}</g></g>{show(False)}</g>
+  <g>{ftr}<g>{fsc}<circle r="{r}" fill="#2a1208" opacity=".7"/>{face}</g>{show(True)}</g>
 </g></g>
 """
 
