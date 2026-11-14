@@ -189,86 +189,60 @@ def fmt(n):
 
 
 # ---- 1 · hero ---------------------------------------------------------------------
-def p_coin(cx, cy, r=122):
-    """Moeda dourada com circuito e um "P" no centro. Gira em falso 3D (escala X com
-    borda deslocada), pulsos de luz correm pelas trilhas e LEDs piscam. Tudo em SMIL."""
-    rng = random.Random(11)
-    spin_dur = 7
-    sp = 'calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"'
+def p_coin(cx, cy, r=118, thick=18, dur=11, layers=16, samples=72):
+    """Moeda dourada minimalista com um "P". Gira 360° em falso 3D: cada camada da borda
+    é um círculo achatado (escala X = cos θ) e deslocado (x = z·sen θ), o que dá corpo à
+    moeda. Frente e verso trocam no meio do giro; o verso é desenhado espelhado para o P
+    sempre aparecer legível. Tudo em SMIL, funciona dentro do <img> do GitHub."""
+    thetas = [2 * math.pi * i / samples for i in range(samples + 1)]
 
-    def anim(attr, values, dur, extra=""):
-        return "" if STATIC else (f'<animate attributeName="{attr}" values="{values}" dur="{dur}s" '
-                                  f'repeatCount="indefinite" {extra}/>')
+    def spin(z):
+        """Animações de escala + deslocamento para uma camada na profundidade z."""
+        if STATIC:
+            return "", ""
+        tr = ";".join(f"{z * math.sin(t):.2f} 0" for t in thetas)
+        sc = ";".join(f"{math.cos(t):.3f} 1" for t in thetas)
+        return (f'<animateTransform attributeName="transform" type="translate" values="{tr}" dur="{dur}s" repeatCount="indefinite"/>',
+                f'<animateTransform attributeName="transform" type="scale" values="{sc}" dur="{dur}s" repeatCount="indefinite"/>')
 
-    def spin(extra_translate=None):
+    def show(front):
         if STATIC:
             return ""
-        out = (f'<animateTransform attributeName="transform" type="scale" values="1 1;.34 1;1 1" '
-               f'dur="{spin_dur}s" repeatCount="indefinite" {sp}/>')
-        if extra_translate:
-            out += (f'<animateTransform attributeName="transform" type="translate" values="0 0;{extra_translate} 0;0 0" '
-                    f'dur="{spin_dur}s" repeatCount="indefinite" additive="sum" {sp}/>')
-        return out
+        vals = "1;0;1" if front else "0;1;0"
+        return (f'<animate attributeName="opacity" values="{vals}" keyTimes="0;.25;.75" calcMode="discrete" '
+                f'dur="{dur}s" repeatCount="indefinite"/>')
 
-    def polar(rad, ang):
-        return rad * math.cos(ang), rad * math.sin(ang)
+    # borda: camadas do fundo para a frente, um pouco mais claras perto das faces
+    edge = []
+    for i in range(layers):
+        z = -thick / 2 + thick * i / (layers - 1)
+        shade = 1 - abs(z) / (thick / 2)
+        col = "#8a4600" if i % 2 else "#9c5300"
+        col = "#b8650c" if shade > .7 else col
+        tr, sc = spin(z)
+        edge.append(f'<g>{tr}<circle r="{r}" fill="{col}">{sc}</circle></g>')
 
-    # trilhas de circuito: saem perto do P, dobram 45° e terminam num pad
-    traces, pads, pulses = [], [], []
-    n = 22
-    for k in range(n):
-        ang = 2 * math.pi * k / n + rng.uniform(-.05, .05)
-        r0 = rng.uniform(64, 70)
-        r1 = rng.uniform(76, 84)
-        r2 = rng.uniform(88, 96)
-        bend = rng.choice([-.13, .13])
-        pts = [polar(r0, ang), polar(r1, ang), polar(r2, ang + bend)]
-        dpath = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in pts)
-        traces.append(dpath)
-        px, py = pts[-1]
-        pads.append((px, py, k))
-        seg = sum(math.dist(pts[i], pts[i + 1]) for i in range(2))
-        if k % 2 == 0:
-            dur = rng.uniform(1.6, 2.6)
-            pulses.append(
-                f'<path d="{dpath}" fill="none" stroke="#fff6d8" stroke-width="2.2" stroke-linecap="round" '
-                f'stroke-dasharray="5 {seg + 20:.0f}" stroke-dashoffset="{seg + 5:.1f}" opacity=".95">'
-                + anim("stroke-dashoffset", f"{seg + 5:.1f};-{seg + 5:.1f}", f"{dur:.2f}",
-                       f'begin="{rng.uniform(0, 2):.2f}s"') + '</path>')
-
-    trace_svg = "".join(f'<path d="{t}"/>' for t in traces)
-    pad_svg = "".join(
-        f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.6" fill="url(#gold)" stroke="#5a3200" stroke-width=".8"/>'
-        f'<circle cx="{x:.1f}" cy="{y:.1f}" r="1.3" fill="#fffbe6" opacity="0">'
-        + anim("opacity", "0;1;0", f"{rng.uniform(1.2, 2.4):.2f}", f'begin="{rng.uniform(0, 2):.2f}s"')
-        + '</circle>'
-        for x, y, k in pads
-    )
-
-    # serrilhado da borda
-    reed = 2 * math.pi * (r - 3)
-    edge_teeth = f'<circle r="{r - 3}" fill="none" stroke="#7a4300" stroke-width="5" stroke-dasharray="2 {reed / 120 - 2:.2f}"/>'
-
-    face = f"""
+    def face(mirror):
+        flip = ' transform="scale(-1 1)"' if mirror else ""
+        return f"""
 <circle r="{r}" fill="url(#gold)"/>
-{edge_teeth}
-<circle r="{r - 9}" fill="url(#face)" stroke="#ffe08a" stroke-width="1.6"/>
-<circle r="{r - 15}" fill="none" stroke="#c77700" stroke-width="1"/>
-<circle r="{r - 20}" fill="none" stroke="#ffd36b" stroke-width=".8" stroke-opacity=".6"/>
-<g fill="none" stroke="#ffc94a" stroke-width="1.6" stroke-linejoin="round" opacity=".85">{trace_svg}</g>
-{''.join(pulses)}
-{pad_svg}
-<circle r="58" fill="url(#face)" stroke="#ffe08a" stroke-width="1.2"/>
-<g font-family="{SERIF}" font-size="138" text-anchor="middle">
-  <g stroke="#ffd36b" stroke-width="5" stroke-linecap="round">
-    <line x1="-10" y1="-62" x2="-10" y2="-46"/><line x1="6" y1="-62" x2="6" y2="-46"/>
-    <line x1="-10" y1="40" x2="-10" y2="56"/><line x1="6" y1="40" x2="6" y2="56"/>
+<circle r="{r - 10}" fill="url(#face)" stroke="#ffe08a" stroke-width="1.6"/>
+<circle r="{r - 17}" fill="none" stroke="{AMBER}" stroke-width="1" stroke-opacity=".55"/>
+<g{flip}>
+  <g stroke="#ffd36b" stroke-width="6" stroke-linecap="round">
+    <line x1="-12" y1="-74" x2="-12" y2="-56"/><line x1="8" y1="-74" x2="8" y2="-56"/>
+    <line x1="-12" y1="48" x2="-12" y2="66"/><line x1="8" y1="48" x2="8" y2="66"/>
   </g>
-  <text x="3" y="47" fill="#4a2600">P</text>
-  <text x="0" y="44" fill="url(#gold)" stroke="#fff1c2" stroke-width="1.2">P</text>
+  <g font-family="{SERIF}" font-size="168" text-anchor="middle">
+    <text x="4" y="58" fill="#3a1a06">P</text>
+    <text x="0" y="54" fill="url(#gold)" stroke="#fff1c2" stroke-width="1.2">P</text>
+  </g>
 </g>
-<ellipse cx="-40" cy="-60" rx="58" ry="22" transform="rotate(-35 -40 -60)" fill="#fff" opacity=".10"/>
-"""
+<ellipse cx="-38" cy="-58" rx="62" ry="22" transform="rotate(-35 -38 -58)" fill="#fff" opacity=".10"/>"""
+
+    ftr, fsc = spin(thick / 2)
+    btr, bsc = spin(-thick / 2)
+    pulse = "" if STATIC else '<animate attributeName="opacity" values="1;.55;1" dur="4s" repeatCount="indefinite"/>'
     return f"""
 <defs>
   <radialGradient id="gold" cx=".35" cy=".3" r=".8">
@@ -282,9 +256,10 @@ def p_coin(cx, cy, r=122):
     <stop offset=".6" stop-color="{MAGENTA}" stop-opacity=".12"/><stop offset="1" stop-color="{MAGENTA}" stop-opacity="0"/></radialGradient>
 </defs>
 <g class="f" {d(0.4)}><g transform="translate({cx} {cy})">
-  <circle r="{r * 1.45:.0f}" fill="url(#halo)">{anim("opacity", "1;.55;1", 3.5)}</circle>
-  <g><circle r="{r}" fill="#5a2c00"/><circle r="{r - 2}" fill="#8a4a00"/>{spin(10)}</g>
-  <g>{face}{spin()}</g>
+  <circle r="{r * 1.5:.0f}" fill="url(#halo)">{pulse}</circle>
+  {''.join(edge)}
+  <g opacity="0">{btr}<g>{bsc}{face(True)}</g>{show(False)}</g>
+  <g>{ftr}<g>{fsc}{face(False)}</g>{show(True)}</g>
 </g></g>
 """
 
