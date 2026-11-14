@@ -26,12 +26,25 @@ FONTS = ROOT / "fonts"
 STATIC = bool(os.environ.get("STATIC"))
 
 # ---- conteúdo ------------------------------------------------------------------
-ROLE = "DESENVOLVEDOR FULL STACK JÚNIOR"
+ROLE = "DESENVOLVEDOR DE SOFTWARE  ·  FULL STACK · PRODUTO · IA APLICADA"
 FIRST, LAST = "Pedro", "Mariano"
-TAGLINE = ["Construo aplicações web do front ao back-end,", "de interfaces a integrações de APIs."]
+TAGLINE = ["Desenvolvo soluções digitais, integrando", "interfaces, sistemas e inteligência artificial."]
 FOOT = "Fortaleza, Brasil  ·  LinkedIn"
-HERO_LABEL = ("Pedro Luiz Mariano. Desenvolvedor Full Stack Júnior em Fortaleza, Brasil. "
-              "Construo aplicações web do front ao back-end, de interfaces a integrações de APIs.")
+HERO_LABEL = ("Pedro Luiz Mariano. Desenvolvedor de Software: Full Stack, Produto e IA Aplicada. "
+              "Fortaleza, Brasil. Desenvolvo soluções digitais, integrando interfaces, sistemas e inteligência artificial.")
+
+ABOUT = [
+    "Sou desenvolvedor de software e graduando em Ciência da Computação pela Universidade de Fortaleza "
+    "(Unifor), com experiência profissional desde 2023.",
+    "Atuei no desenvolvimento e na evolução de aplicações web para os setores de saúde, eventos e e-commerce, "
+    "trabalhando com interfaces, back-end, integrações de APIs, UX e funcionalidades de produto.",
+    "Na TerraBrasilis, participei da construção da plataforma e do suporte durante eventos. Na WebStore, atuei "
+    "na evolução do painel administrativo, com decisões de produto, desenvolvimento de funcionalidades e "
+    "publicação de aplicações.",
+    "Tenho interesse em engenharia de software, arquitetura, automações e inteligência artificial aplicada. "
+    "Uso ferramentas e agentes de IA no desenvolvimento, buscando combinar produtividade, compreensão técnica "
+    "e qualidade das soluções.",
+]
 
 # (arquivo, rótulo, grande, grande em itálico, texto)
 TILES = [
@@ -39,21 +52,21 @@ TILES = [
      "TypeScript, JavaScript, Tailwind CSS, Sass/SCSS e styled-components."),
     ("back", "BACK-END", "Node", "& NestJS",
      "APIs REST, BFF, MongoDB e MySQL."),
-    ("tools", "FERRAMENTAS", "Docker", "& Git",
-     "Figma, Postman, Storybook e AWS Amplify."),
+    ("tools", "FERRAMENTAS & IA", "Git", "& agentes",
+     "Desenvolvimento assistido por IA, Docker, Figma, Postman, Storybook e AWS Amplify."),
 ]
 
 # (arquivo, nome, descrição, cargo)
 JOBS = [
     ("webstore", "WebStore",
-     "E-commerce, painel administrativo e PDV com Next.js, React e TypeScript.",
-     "Estágio → Dev Júnior (PJ)"),
+     "E-commerce, painel administrativo e PDV com Next.js e TypeScript. PO do painel administrativo.",
+     "Estágio → Dev Júnior (PJ) · PO"),
     ("spaceodyssey", "SpaceOdyssey",
-     "TerraBrasilis: plataforma de gestão de eventos com Next.js, NestJS e MongoDB.",
+     "TerraBrasilis: plataforma de eventos com NestJS e MongoDB. UX e suporte em eventos.",
      "Desenvolvedor Full Stack"),
     ("healthdev", "HealthDEV",
      "SaúdeHD: interfaces de aplicação web com React, TypeScript e Tailwind CSS.",
-     "Desenvolvedor Front-end"),
+     "Estágio · Desenvolvedor Front-end"),
 ]
 
 # ---- tokens ---------------------------------------------------------------------
@@ -217,6 +230,23 @@ def hero():
 
 
 # ---- 2 · gráfico de contribuições ----------------------------------------------
+def about():
+    lines = []
+    y = 104
+    for para in ABOUT:
+        for l in wrap(para, 104):
+            lines.append((y, l))
+            y += 23
+        y += 12
+    h = y + 18
+    body = (f'{card(W, h, wave=False)}'
+            f'<text class="r" {d(0.9)} x="42" y="62" font-family="{SERIF}" font-size="34" fill="{INK}">Sobre '
+            f'<tspan font-style="italic" fill="{ORANGE}">mim</tspan></text>'
+            f'<g class="f" {d(1.1)} font-family="{SANS}" font-size="15" fill="{INK_SOFT}">'
+            + "".join(f'<text x="44" y="{yy}">{escape(l)}</text>' for yy, l in lines) + "</g>")
+    write("about.svg", W, h, body, ["serif", "serif-i", "sans"], " ".join(ABOUT))
+
+
 def heatmap(data):
     days = data["days"]
     lead = (date.fromisoformat(days[0]["date"]).weekday() + 1) % 7  # domingo = 0
@@ -249,7 +279,7 @@ def heatmap(data):
     body = f"""
 {card(W, h, wave=False)}
 <text class="r" {d(0.8)} x="42" y="62" font-family="{SERIF}" font-size="34" fill="{INK}">Dia a dia, <tspan font-style="italic" fill="{PINK}">no código</tspan></text>
-<text class="f" {d(0.8)} x="{right}" y="60" text-anchor="end" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">ATUALIZADO DIARIAMENTE</text>
+<text class="f" {d(0.8)} x="{right}" y="60" text-anchor="end" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">ÚLTIMO ANO</text>
 {''.join(cells)}
 <g class="f" {d(2.4)}>{labels}
 <text x="{legend_x - 8}" y="{ly + 16}" text-anchor="end" font-family="{MONO}" font-size="11" fill="{MUTED}">menos</text>
@@ -385,11 +415,13 @@ def section_title(name, text, italic, theme):
 if __name__ == "__main__":
     data = json.loads(DATA.read_text(encoding="utf-8"))
     hero()
-    heatmap(data)
-    activity(data)
+    about()
     for i, t in enumerate(TILES):
         tile(i, *t)
     for theme in ("dark", "light"):
         section_title("exp", "Onde", "trabalhei", theme)
+        section_title("gh", "Atividade no", "GitHub", theme)
     for i, j in enumerate(JOBS):
         job_card(i, *j)
+    heatmap(data)
+    activity(data)
