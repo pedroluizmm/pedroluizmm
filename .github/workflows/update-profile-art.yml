@@ -6,15 +6,12 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - "scripts/**"
-      - ".github/workflows/update-profile-art.yml"
 
 permissions:
   contents: write
 
 jobs:
-  heatmap:
+  cards:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,9 +20,9 @@ jobs:
           python-version: "3.11"
       - name: Fetch contributions
         run: python scripts/fetch_contributions.py
-      - name: Render heatmap
-        run: python scripts/render_heatmap_svg.py
+      - name: Render README cards
+        run: python scripts/render_readme_cards.py
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: refresh contribution graph [skip ci]"
-          file_pattern: "data/contributions.json contrib-heatmap.svg"
+          commit_message: "chore: refresh profile cards [skip ci]"
+          file_pattern: "data/contributions.json cards/*.svg"
